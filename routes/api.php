@@ -13,16 +13,13 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
-Route::namespace('API')->name('api.')->group(function(){
-    Route::prefix('/product')->group(function(){
-        Route::get('/', 'ProductController@index')->name('index_products');
-        Route::get('/{id}', 'ProductController@show')->name('single_products');
-        Route::post('/', 'ProductController@store')->name('store_products');
-        Route::put('/{id}', 'ProductController@update')->name('update_products');
-        Route::delete('/{id}', 'ProductController@delete')->name('delete_products');
+Route::middleware('cache.headers:public;max_age=2628000;etag')->group(function() {
+    Route::namespace('API')->name('api.')->group(function(){
+        Route::prefix('/poll')->group(function(){
+            Route::get('/{id}/stats', 'PollController@stats')->name('poll_status');
+            Route::post('/{id}/vote', 'PollController@vote')->name('add_vote');
+            Route::get('/{id}', 'PollController@show')->name('single_poll');  
+            Route::post('/', 'PollController@store')->name('store_poll'); 
+        });
     });
 });
