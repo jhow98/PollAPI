@@ -7,7 +7,6 @@ use Api\Http\Controllers\Controller;
 use Api\API\ApiError;
 use Api\Poll;
 use Api\Options;
-use Illuminate\Support\Facades\DB;
 
 class PollController extends Controller
 {
@@ -41,7 +40,6 @@ class PollController extends Controller
     {
         $poll = $this->poll->find($id);
 
-        //if (!$poll) return response()->json(ApiError::errorMessage('Votação não encontrada!', 404), 404);
         if (!$poll) return response('', 404);
 
         $data = [
