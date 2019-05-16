@@ -4,10 +4,14 @@ namespace Api\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use Api\Http\Controllers\Controller;
-use Api\API\ApiError;
 use Api\Poll;
 use Api\Options;
 
+/*
+|--------------------------------------------------------------------------
+| Classe controrladora principal. Possui todos os métodos para retorno dos endpoints solicitados.
+|--------------------------------------------------------------------------
+*/
 class PollController extends Controller
 {
     private $poll;
@@ -17,7 +21,7 @@ class PollController extends Controller
         $this->poll = $poll;
     }
 
-    public function show($id)
+    public function show($id) //Retorna uma enquete e incrementa uma view a ela
     {
         $poll = $this->poll->find($id);
 
@@ -36,7 +40,7 @@ class PollController extends Controller
         );
     }
 
-    public function stats($id)
+    public function stats($id) // retorna o status de uma votação.
     {
         $poll = $this->poll->find($id);
 
@@ -52,7 +56,7 @@ class PollController extends Controller
     }
 
 
-    public function store(Request $request)
+    public function store(Request $request) // Cria uma votação, dados recebidos via POST
     {
 
         try {
@@ -74,7 +78,7 @@ class PollController extends Controller
         }
     }
 
-    public function vote($id)
+    public function vote($id) // Adiciona um voto a uma opção de uma determinada enquete.
     {
         try {
             $option = Options::find($id);
